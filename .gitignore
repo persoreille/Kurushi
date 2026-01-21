@@ -33,6 +33,7 @@
 
 # Visual Studio cache directory
 .vs/
+.vscode/
 
 # Gradle cache directory
 .gradle/
@@ -97,3 +98,13 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+
+# Tutorials + Recovery
+/[Aa]ssets/[Tt]utorial[Ii]nfo/
+/[Aa]ssets/_Recovery/
+
+# Packages for pipeline
+/[Pp]ackages/*
+!/[Pp]ackages/manifest.json
+!/[Pp]ackages/packages-lock.json
+com.unity.render-pipelines.universal/
