@@ -1,3 +1,4 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -64,10 +65,7 @@ public class PlayerController : MonoBehaviour
     {
         moveInput = ctx.ReadValue<Vector2>();
 
-        // if (ctx.performed)
-        // {
-        //     Debug.Log($"Move {moveInput}");
-        // }
+
 
         if (ctx.canceled)
         {
@@ -141,11 +139,6 @@ public class PlayerController : MonoBehaviour
         cubeLevelManager.TriggerGreenReaction();
     }
 
-    // // Appelé par PlayerInput (Input System)
-    // public void OnMove(InputValue value)
-    // {
-    //     moveInput = value.Get<Vector2>();
-    // }
     void OnCubeRoll(InputAction.CallbackContext ctx)
     {
         
@@ -165,29 +158,26 @@ public class PlayerController : MonoBehaviour
             Debug.LogError("GroundGenerator or CubeLevelManager not initialized");
             return;
         }
-            
-
-        // Detecter s'il s'approche trop des bords:
-        
-        Vector3 moveDir = new Vector3(-moveInput.x, 0f, -moveInput.y);
-        bool isMoving = moveDir.sqrMagnitude > 0.001f;
-
-        if (!isMoving)
+                    
+        // Test if movement asked
+        if (moveInput.sqrMagnitude < 0.001f)
         {
-            animator.SetBool("isRunning", isMoving);
+            animator.SetBool("isRunning", false);
             return;
         }
         
+        Vector3 moveDir = new Vector3(-moveInput.x, 0f, -moveInput.y);
         Vector3 nextPos3d = transform.position + moveDir * moveSpeed * Time.deltaTime;
-        Vector2 nextPos2d = new Vector2(nextPos3d.x, nextPos3d.z);
+    
+        // Border detection
+        if (BorderIsAlmostThere(moveInput, transform.position, 0.1f))
+        {
+            Debug.Log("[PlayerController] Border close => Can't move");
+            animator.SetBool("isRunning", false);
+            return;
+        }
 
-        bool borderClose = ground.IsInsideBounds(transform.position, 0.2f);
-        bool rightDirection = ground.IsInsideBounds(transform.position + moveDir*0.2f, 0.1f);
-
-        Vector2 playerPos = new Vector2(transform.position.x, transform.position.z);
-        Vector2 playerDir = new Vector2(moveDir.x, moveDir.z);
-
-
+        
         // TODO : get this working
         // if (borderClose && !rightDirection)
         // {
@@ -220,6 +210,12 @@ public class PlayerController : MonoBehaviour
 
         // Déplacement
         transform.position = nextPos3d;
+    }
+
+    private bool BorderIsAlmostThere(Vector2 _moveDir, Vector3 _playerPos, float margin = 0.5f)
+    {
+        Vector3 nextPos = _playerPos - new Vector3(_moveDir.x, 0, _moveDir.y)*margin;
+        return ground.GetGroundCubeUnderWorldPos(nextPos) == null;
     }
 
 

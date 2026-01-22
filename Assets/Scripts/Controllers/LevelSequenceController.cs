@@ -11,7 +11,7 @@ public class LevelSequenceController : MonoBehaviour
     [SerializeField] private CubeLevelManager cubeLevelManager;
     [SerializeField] private PressureManager pressureManager;
     [SerializeField] private Character characterFactory;  // ← Add this reference
-    [SerializeField] private PlayerController playerController;
+    //[SerializeField] private PlayerController playerController;
     
 
     [Header("Timings")]

@@ -724,7 +724,6 @@ GameObject:
   m_Component:
   - component: {fileID: 938529563}
   - component: {fileID: 938529565}
-  - component: {fileID: 938529564}
   m_Layer: 0
   m_Name: PlayerAnimator
   m_TagString: Untagged
@@ -747,20 +746,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 717731228}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &938529564
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 938529562}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 951b7d8653490d3d39b833c18d3fc0eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  moveSpeed: 0.5
-  rotationSpeed: 720
 --- !u!95 &938529565
 Animator:
   serializedVersion: 7
@@ -831,7 +816,6 @@ MonoBehaviour:
   cubeLevelManager: {fileID: 1686207545}
   pressureManager: {fileID: 1824256639}
   characterFactory: {fileID: 1422026736}
-  playerController: {fileID: 938529564}
   delayBetweenPhases: 0.5
 --- !u!1 &1204479039
 GameObject:
