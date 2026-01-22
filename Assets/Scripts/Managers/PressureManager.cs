@@ -15,12 +15,24 @@ public class PressureManager : MonoBehaviour
 
     
     void Start()
-    {
-        cubeLevelManager.OnRollStarted += () => ResetPressure(true);
-        cubeLevelManager.OnRollFinished += () => ResetPressure(false);
-        OnPressureTimeout += () => ResetPressure(true);
-        ResetPressure(false);
-        Pause();
+    {   
+        // Subscribers
+        cubeLevelManager.OnRollStarted += () => {
+            Pause();
+            ResetPressure();
+        };
+        cubeLevelManager.OnRollFinished += () => {
+            ResetPressure();
+            Play();
+        };
+        OnPressureTimeout += () => {
+            Pause();
+            ResetPressure();
+        };
+
+        // ResetPressure();
+        // Pause();
+
     }
 
     private void WaitForSeconds(float v)
@@ -42,10 +54,10 @@ public class PressureManager : MonoBehaviour
         }
     }
 
-    public void ResetPressure(bool _paused)
+    public void ResetPressure()
     {
         timer = maxPressureTime;
-        paused = _paused;
+        // paused = _paused;
     }
 
     public float GetNormalizedPressure()
