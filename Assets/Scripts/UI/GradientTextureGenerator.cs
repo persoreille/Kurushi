@@ -50,7 +50,7 @@ public class GradientTextureGenerator : MonoBehaviour
         System.IO.File.WriteAllBytes(path, bytes);
         AssetDatabase.Refresh();
         
-        IDebug.Log("Gradient texture created at: " + path);
+        IDebug.Log($"Gradient texture created at: {path}");
         
         // Set texture import settings
         TextureImporter importer = AssetImporter.GetAtPath(path) as TextureImporter;

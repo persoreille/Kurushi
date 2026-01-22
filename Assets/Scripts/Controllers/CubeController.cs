@@ -77,7 +77,7 @@ public class CubeController : MonoBehaviour
         view.PlayAppearAnimation();
     }
 
-    public void Rise(System.Action onComplete = null)
+    public void Rise(Action onComplete = null)
     {
         view.PlayRiseAnimation(onComplete);
     }
