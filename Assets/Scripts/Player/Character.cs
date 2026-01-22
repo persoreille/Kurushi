@@ -27,13 +27,14 @@ public class Character : MonoBehaviour
             Debug.LogError("Player Prefab is not assigned in Character script");
             return null;
         }
+
         Vector3 spawnPosition = new Vector3(
             levelStructure.width / 2 -0.5f,
             spawnHeight,
-            1
+            levelStructure.playfieldDepth-1
         );
 
-        playerInstance = Instantiate(playerPrefab, spawnPosition, Quaternion.identity, parent);
+        playerInstance = Instantiate(playerPrefab, spawnPosition, Quaternion.Euler(0,180,0), parent);
         playerController = playerInstance.GetComponent<PlayerController>();
 
         if(playerController == null)
