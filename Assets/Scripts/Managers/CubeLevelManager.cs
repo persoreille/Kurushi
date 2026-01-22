@@ -339,7 +339,7 @@ public class CubeLevelManager : MonoBehaviour
         {
             cube.Rise(() => {
                 cubesFinished++;
-                Debug.Log($"Cube finished rising. {cubesFinished}/{cubesRising}");
+                // Debug.Log($"Cube finished rising. {cubesFinished}/{cubesRising}");
             });
         }
         

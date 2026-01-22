@@ -58,11 +58,11 @@ public class CubeController : MonoBehaviour
     {
         if (model.IsRolling)
         {
-            Debug.Log("[CubeController] Already rolling");
+            // Debug.Log("[CubeController] Already rolling");
             return;
         }
 
-        Debug.Log("[CubeController] Rolling cube");
+        // Debug.Log("[CubeController] Rolling cube");
         model.IsRolling = true;
         model.TargetGridPos = model.GridPos + direction;
         

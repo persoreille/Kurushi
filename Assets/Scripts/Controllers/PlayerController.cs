@@ -27,20 +27,9 @@ public class PlayerController : MonoBehaviour
         cubeLevelManager = cubeManager;
 
         // Subscribe to the events to do something
-        cubeLevelManager.OnRollStarted += () =>  
-        {
-            isRolling = true;
-            Debug.Log("[[[Rolling]]]");
-        };
-
-        cubeLevelManager.OnRollFinished += () =>
-        {
-            isRolling = false;
-            Debug.Log("[[[Not rolling]]]");
-        };
-
+        cubeLevelManager.OnRollStarted += () => { isRolling = true; };
+        cubeLevelManager.OnRollFinished += () => { isRolling = false; };
     }
-
 
     void Awake()
     {
@@ -103,12 +92,14 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                if(cubeSelected != null)
+                if(cubeSelected != null) // Cube selected already
                 {
                     cubeSelected.Unselect();  // Use Controller method
                 }
                 groundCube.Select();  // Use Controller method
                 cubeSelected = groundCube;
+
+                Debug.Log($"Cube selected: {cubeSelected.Model.GridPos.ToString()}");
             }
         }
     }
@@ -117,7 +108,11 @@ public class PlayerController : MonoBehaviour
     {
         // Only process on performed phase to avoid double triggers
         if (!ctx.performed)
+        {
+            Debug.Log("No blow action requested");
             return;
+        }
+            
 
         if (cubeSelected == null)
         {
@@ -193,20 +188,23 @@ public class PlayerController : MonoBehaviour
         Vector2 playerDir = new Vector2(moveDir.x, moveDir.z);
 
 
-        if (borderClose && !rightDirection)
-        {
-            Debug.Log("Can't move");
-            animator.SetBool("isRunning", false);
-            return;
-        }
+        // TODO : get this working
+        // if (borderClose && !rightDirection)
+        // {
+        //     Debug.Log("Can't move");
+        //     animator.SetBool("isRunning", false);
+        //     return;
+        // }
 
         //Vector3 nextPos = transform.position + moveDir * moveSpeed * Time.deltaTime;
-        if (cubeLevelManager.IsWorldPositionBLocked(nextPos3d))
-        {
-            Debug.Log("Player blocked !");
-            animator.SetBool("isRunning", false);
-            return;
-        }
+
+        // TODO : get this working
+        // if (cubeLevelManager.IsWorldPositionBLocked(nextPos3d))
+        // {
+        //     Debug.Log("Player blocked !");
+        //     animator.SetBool("isRunning", false);
+        //     return;
+        // }
 
         animator.SetBool("isRunning", true);
         // Debug.Log(transform.position);
