@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class GroundGenerator : MonoBehaviour
 {
@@ -10,7 +11,10 @@ public class GroundGenerator : MonoBehaviour
     
     private Dictionary<Vector2Int, CubeController> groundCubes = new Dictionary<Vector2Int, CubeController>();
 
+
+    public Action OnSpawnGroundSequenceFinished;
     public IEnumerator SpawnSequence(int width, int depth)
+    // public void SpawnSequence(int width, int depth)
     {
         // Create ground cubes using the factory
         for (int x = 0; x < width; x++)
@@ -31,9 +35,11 @@ public class GroundGenerator : MonoBehaviour
                     groundCubes[pos] = groundCube;
                 }
                 
+                
                 yield return null; // Stagger creation
             }
         }
+        OnSpawnGroundSequenceFinished?.Invoke();
     }
 
     public CubeController GetGroundCubeAt(Vector2Int pos)
