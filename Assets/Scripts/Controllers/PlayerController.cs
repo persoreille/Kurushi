@@ -97,7 +97,7 @@ public class PlayerController : MonoBehaviour
                 groundCube.Select();  // Use Controller method
                 cubeSelected = groundCube;
 
-                IDebug.Log("Cube selected: {cubeSelected.Model.GridPos.ToString()}");
+                IDebug.Log($"Cube selected: {cubeSelected.Model.GridPos.ToString()}");
             }
         }
     }
@@ -118,7 +118,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        IDebug.Log("Blowing cube at {cubeSelected.Model.GridPos}, type: {cubeSelected.Model.ClassicType}");
+        IDebug.Log($"Blowing cube at {cubeSelected.Model.GridPos}, type: {cubeSelected.Model.ClassicType}");
         
         // CubeBlow handles the melting and destruction
         if (cubeLevelManager.CubeBlow(cubeSelected))
@@ -172,7 +172,7 @@ public class PlayerController : MonoBehaviour
         // Border detection
         if (BorderIsAlmostThere(moveInput, transform.position, 0.1f))
         {
-            IDebug.Log("[PlayerController] Border close => Can't move");
+            IDebug.Log("Border close => Can't move");
             animator.SetBool("isRunning", false);
             return;
         }
@@ -181,7 +181,7 @@ public class PlayerController : MonoBehaviour
         // CubeLevel detection
         if (CubeIsAlmostThere(moveInput, transform.position, 0.1f))
         {
-            IIDebug.Log("Cube almost there");
+            IDebug.Log("Cube almost there");
             animator.SetBool("isRunning", false);
             return;
 

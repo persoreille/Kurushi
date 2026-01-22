@@ -45,7 +45,7 @@ public class Character : MonoBehaviour
 
         playerController.Initialize(groundGenerator, cubeLevelManager);
 
-        IDebug.Log("Player created at {spawnPosition}");
+        IDebug.Log($"Player created at {spawnPosition}");
         
         return playerInstance;
         

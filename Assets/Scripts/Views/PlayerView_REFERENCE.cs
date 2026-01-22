@@ -45,7 +45,7 @@ public class PlayerView_REFERENCE : MonoBehaviour
     {
         // Visual feedback when cube is selected
         // e.g., play selection sound, show UI indicator, etc.
-        IDebug.Log("Cube selected at {cube.Model.GridPos}");
+        IDebug.Log($"Cube selected at {cube.Model.GridPos}");
     }
     
     private void HandleCubeUnselected()
