@@ -66,15 +66,16 @@ public class GroundGenerator : MonoBehaviour
         return greenCubes;
     }
 
-    public bool IsInsideBounds(Vector3 worldPos, float margin = 0f)
-    {
-        // Implementation depends on your ground dimensions
-        // This is just an example
-        return worldPos.x >= margin && worldPos.z >= margin;
-    }
-
-    //     public bool IsInsideBounds(Vector3 worldPos, float margin = 0f)
+    // public bool IsInsideBounds(Vector3 worldPos, float margin = 0f)
     // {
+    //     // Implementation depends on your ground dimensions
+    //     // This is just an example
+    //     return worldPos.x >= margin && worldPos.z >= margin;
+    // }
+
+    // public bool IsInsideBounds(Vector3 worldPos, float margin = 0f)
+    // {
+        
     //     return
     //         pos.x >= margin-0.5 &&
     //         pos.x < (width-0.5) - margin &&
