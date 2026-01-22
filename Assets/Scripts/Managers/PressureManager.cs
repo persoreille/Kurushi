@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using UnityEditor.PackageManager;
 
 public class PressureManager : MonoBehaviour
 {
@@ -15,9 +16,10 @@ public class PressureManager : MonoBehaviour
     
     void Start()
     {
-        cubeLevelManager.OnRollFinished += () => ResetPressure();
-        OnPressureTimeout += () => ResetPressure();
-        ResetPressure();
+        cubeLevelManager.OnRollStarted += () => ResetPressure(true);
+        cubeLevelManager.OnRollFinished += () => ResetPressure(false);
+        OnPressureTimeout += () => ResetPressure(true);
+        ResetPressure(false);
         Pause();
     }
 
@@ -40,10 +42,10 @@ public class PressureManager : MonoBehaviour
         }
     }
 
-    public void ResetPressure()
+    public void ResetPressure(bool _paused)
     {
         timer = maxPressureTime;
-        paused = false;
+        paused = _paused;
     }
 
     public float GetNormalizedPressure()

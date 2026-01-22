@@ -60,7 +60,7 @@ public class LevelSequenceController : MonoBehaviour
         characterFactory.CreateCharacter(level, transform);
         
         // Starts timer and rolling
-        pressureManager.ResetPressure();
+        pressureManager.ResetPressure(false);
         
 
     
