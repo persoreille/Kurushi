@@ -113,14 +113,14 @@ public class PlayerController_REFERENCE : MonoBehaviour
         // Check boundaries
         Vector3 nextPos = transform.position + moveDir * model.MoveSpeed * Time.deltaTime;
         
-        bool borderClose = ground.IsInsideBounds(transform.position, 0.2f);
-        bool rightDirection = ground.IsInsideBounds(transform.position + moveDir * 0.2f, 0.1f);
+        //bool borderClose = ground.IsInsideBounds(transform.position, 0.2f);
+        //bool rightDirection = ground.IsInsideBounds(transform.position + moveDir * 0.2f, 0.1f);
         
-        if (borderClose && !rightDirection)
-        {
-            model.SetMoving(false);
-            return;
-        }
+        // if (borderClose && !rightDirection)
+        // {
+        //     model.SetMoving(false);
+        //     return;
+        // }
         
         // Check cube collision
         if (cubeLevelManager.IsWorldPositionBLocked(nextPos))
