@@ -97,7 +97,7 @@ public class PlayerController : MonoBehaviour
                 groundCube.Select();  // Use Controller method
                 cubeSelected = groundCube;
 
-                Debug.Log($"Cube selected: {cubeSelected.Model.GridPos.ToString()}");
+                IDebug.Log("Cube selected: {cubeSelected.Model.GridPos.ToString()}");
             }
         }
     }
@@ -107,25 +107,25 @@ public class PlayerController : MonoBehaviour
         // Only process on performed phase to avoid double triggers
         if (!ctx.performed)
         {
-            Debug.Log("No blow action requested");
+            IDebug.Log("No blow action requested");
             return;
         }
             
 
         if (cubeSelected == null)
         {
-            Debug.Log("No cube selected to blow");
+            IDebug.Log("No cube selected to blow");
             return;
         }
 
-        Debug.Log($"Blowing cube at {cubeSelected.Model.GridPos}, type: {cubeSelected.Model.ClassicType}");
+        IDebug.Log("Blowing cube at {cubeSelected.Model.GridPos}, type: {cubeSelected.Model.ClassicType}");
         
         // CubeBlow handles the melting and destruction
         if (cubeLevelManager.CubeBlow(cubeSelected))
         {
             // Clear the selection since the cube is being destroyed
             cubeSelected = null;
-            Debug.Log("Cube blown successfully");
+            IDebug.Log("Cube blown successfully");
         }
     }
 
@@ -135,7 +135,7 @@ public class PlayerController : MonoBehaviour
         if (!ctx.performed)
             return;
 
-        Debug.Log("Green reaction triggered - blowing all green ground cubes");
+        IDebug.Log("Green reaction triggered - blowing all green ground cubes");
         cubeLevelManager.TriggerGreenReaction();
     }
 
@@ -145,7 +145,7 @@ public class PlayerController : MonoBehaviour
         if((!ctx.performed) || isRolling)
             return;
 
-        Debug.Log("Cube roll triggered manually");
+        IDebug.Log("Cube roll triggered manually");
         
         StartCoroutine(cubeLevelManager.RollForwardByRowsCoroutine());
     }
@@ -172,20 +172,20 @@ public class PlayerController : MonoBehaviour
         // Border detection
         if (BorderIsAlmostThere(moveInput, transform.position, 0.1f))
         {
-            Debug.Log("[PlayerController] Border close => Can't move");
+            IDebug.Log("[PlayerController] Border close => Can't move");
             animator.SetBool("isRunning", false);
             return;
         }
 
-        
-        // TODO : get this working
-        // if (borderClose && !rightDirection)
-        // {
-        //     Debug.Log("Can't move");
-        //     animator.SetBool("isRunning", false);
-        //     return;
-        // }
 
+        // CubeLevel detection
+        if (CubeIsAlmostThere(moveInput, transform.position, 0.1f))
+        {
+            IIDebug.Log("Cube almost there");
+            animator.SetBool("isRunning", false);
+            return;
+
+        }
         //Vector3 nextPos = transform.position + moveDir * moveSpeed * Time.deltaTime;
 
         // TODO : get this working
@@ -218,5 +218,12 @@ public class PlayerController : MonoBehaviour
         return ground.GetGroundCubeUnderWorldPos(nextPos) == null;
     }
 
+    private bool CubeIsAlmostThere(Vector2 _moveDir, Vector3 _playerPos, float margin = 0.5f)
+    {
+        Vector2 nextPos = new Vector2(_playerPos.x, _playerPos.z) - _moveDir * margin;
+        Vector2Int nextPosInt = new Vector2Int(Mathf.RoundToInt(nextPos.x), Mathf.RoundToInt(nextPos.y));
+        return cubeLevelManager.IsOccupied(nextPosInt);
+        // return false;
+    }
 
 }
