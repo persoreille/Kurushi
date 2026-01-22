@@ -35,7 +35,7 @@ public class LevelSequenceController : MonoBehaviour
     {
         LevelStructure level = LevelLoader.Load("Level_01", 1);
 
-        Debug.Log("Width:"+level.width + " / Depth:"+level.depth);
+        IDebug.Log("Width:"+level.width + " / Depth:"+level.depth);
         
         // Create the ground for the level
         yield return StartCoroutine(groundGenerator.SpawnSequence(level.width, level.playfieldDepth));

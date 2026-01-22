@@ -73,16 +73,16 @@ public class PlayerController_REFERENCE : MonoBehaviour
         
         if (!model.HasSelectedCube())
         {
-            Debug.Log("No cube selected to blow");
+            IDebug.Log("No cube selected to blow");
             return;
         }
         
-        Debug.Log($"Blowing cube at {model.SelectedCube.Model.GridPos}");
+        IDebug.Log($"Blowing cube at {model.SelectedCube.Model.GridPos}");
         
         if (cubeLevelManager.CubeBlow(model.SelectedCube))
         {
             model.UnselectCube();
-            Debug.Log("Cube blown successfully");
+            IDebug.Log("Cube blown successfully");
         }
     }
     
@@ -90,7 +90,7 @@ public class PlayerController_REFERENCE : MonoBehaviour
     {
         if (!ctx.performed) return;
         
-        Debug.Log("Green reaction triggered");
+        IDebug.Log("Green reaction triggered");
         cubeLevelManager.TriggerGreenReaction();
     }
     
@@ -112,16 +112,7 @@ public class PlayerController_REFERENCE : MonoBehaviour
         
         // Check boundaries
         Vector3 nextPos = transform.position + moveDir * model.MoveSpeed * Time.deltaTime;
-        
-        //bool borderClose = ground.IsInsideBounds(transform.position, 0.2f);
-        //bool rightDirection = ground.IsInsideBounds(transform.position + moveDir * 0.2f, 0.1f);
-        
-        // if (borderClose && !rightDirection)
-        // {
-        //     model.SetMoving(false);
-        //     return;
-        // }
-        
+                
         // Check cube collision
         if (cubeLevelManager.IsWorldPositionBLocked(nextPos))
         {

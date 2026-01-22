@@ -34,23 +34,23 @@ public class CubeController : MonoBehaviour
     {
         if (model.ActualType == CubeModel.CubeType.Selected)
         {
-            Debug.Log("[CubeController] Already selected");
+            IDebug.Log("Already selected");
             return;
         }
         
-        Debug.Log("[CubeController] Selecting cube");
+        IDebug.Log("Selecting cube");
         model.Select();
     }
 
     public void Unselect()
     {
-        Debug.Log("[CubeController] Unselecting cube");
+        IDebug.Log("Unselecting cube");
         model.Unselect();
     }
 
     public void ChangeType(CubeModel.CubeType newType)
     {
-        Debug.Log("[CubeController] Changing type to " + newType);
+        IDebug.Log("Changing type to " + newType);
         model.ChangeType(newType);
     }
 
@@ -58,11 +58,11 @@ public class CubeController : MonoBehaviour
     {
         if (model.IsRolling)
         {
-            // Debug.Log("[CubeController] Already rolling");
+            // IDebug.Log("Already rolling");
             return;
         }
 
-        // Debug.Log("[CubeController] Rolling cube");
+        // IDebug.Log("Rolling cube");
         model.IsRolling = true;
         model.TargetGridPos = model.GridPos + direction;
         

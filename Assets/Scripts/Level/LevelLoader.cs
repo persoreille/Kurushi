@@ -9,7 +9,7 @@ public class LevelLoader
         TextAsset txt = Resources.Load<TextAsset>("Levels/" + levelName);
         if(txt == null)
         {
-            Debug.Log("Level not found: " + levelName);
+            IDebug.Log("Level not found: " + levelName);
             return null;
         }
 

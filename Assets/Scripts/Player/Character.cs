@@ -39,13 +39,13 @@ public class Character : MonoBehaviour
 
         if(playerController == null)
         {
-            Debug.LogError("Player prefab must have PlayerCOntroller component");
+            Debug.LogError("Player prefab must have PlayerController component");
             return null;
         }
 
         playerController.Initialize(groundGenerator, cubeLevelManager);
 
-        Debug.Log($"Player created at {spawnPosition}");
+        IDebug.Log("Player created at {spawnPosition}");
         
         return playerInstance;
         

@@ -135,7 +135,7 @@ public class CubeLevelManager : MonoBehaviour
         );
 
         if (ret)
-            Debug.Log("Reserved");
+            IDebug.Log("Reserved");
 
         return ret;
     }
@@ -161,11 +161,11 @@ public class CubeLevelManager : MonoBehaviour
     {
         if (selectedCube == null)
         {
-            Debug.Log("CubeBlow: selectedCube is null");
+            IDebug.Log("CubeBlow: selectedCube is null");
             return false;
         }
 
-        Debug.Log($"CubeBlow: Selected cube at {selectedCube.Model.GridPos}, height={selectedCube.transform.position.y}, type={selectedCube.Model.ClassicType}");
+        IDebug.Log($"CubeBlow: Selected cube at {selectedCube.Model.GridPos}, height={selectedCube.transform.position.y}, type={selectedCube.Model.ClassicType}");
 
         Vector2Int pos = selectedCube.Model.GridPos;
         bool isGroundCube = Mathf.Approximately(selectedCube.transform.position.y, 0f);
@@ -173,14 +173,14 @@ public class CubeLevelManager : MonoBehaviour
         // Player can only blow from ground cubes
         if (!isGroundCube)
         {
-            Debug.Log("CubeBlow: Can only blow from ground level cubes");
+            IDebug.Log("CubeBlow: Can only blow from ground level cubes");
             return false;
         }
 
         // If the selected ground cube is GREEN, blow all 9 cubes in 3x3 area above
         if (selectedCube.Model.ClassicType == CubeModel.CubeType.Green)
         {
-            Debug.Log("CubeBlow: Green ground cube - blowing 9 cubes in 3x3 area");
+            IDebug.Log("CubeBlow: Green ground cube - blowing 9 cubes in 3x3 area");
             BlowCubesAbove(pos);
             return true;
         }
@@ -190,12 +190,12 @@ public class CubeLevelManager : MonoBehaviour
         
         if (cubeAbove == null)
         {
-            Debug.Log("CubeBlow: No cube above to blow");
+            IDebug.Log("CubeBlow: No cube above to blow");
             return false;
         }
 
-        Debug.Log($"CubeBlow: Found cube above at height {cubeAbove.transform.position.y}, type={cubeAbove.Model.ClassicType}");
-        Debug.Log("CubeBlow: Normal blow - blowing single cube above");
+        IDebug.Log($"CubeBlow: Found cube above at height {cubeAbove.transform.position.y}, type={cubeAbove.Model.ClassicType}");
+        IDebug.Log("CubeBlow: Normal blow - blowing single cube above");
         BlowSingleCube(cubeAbove, selectedCube);
 
         return true;
@@ -218,7 +218,7 @@ public class CubeLevelManager : MonoBehaviour
     {
         CubeModel.CubeType cubeType = cubeToBlow.Model.ClassicType;
         
-        Debug.Log($"BlowSingleCube: Melting cube type {cubeType} to ground");
+        IDebug.Log($"BlowSingleCube: Melting cube type {cubeType} to ground");
         
         // Start melt animation, then change ground cube type
         StartCoroutine(MeltCubeToGround(cubeToBlow, groundCube, cubeType));
@@ -272,7 +272,7 @@ public class CubeLevelManager : MonoBehaviour
 
     private void BlowCubesAbove(Vector2Int groundPos)
     {
-        Debug.Log($"BlowCubesAbove: Blowing 3x3 area above {groundPos}");
+        IDebug.Log($"BlowCubesAbove: Blowing 3x3 area above {groundPos}");
         
         // First, turn the triggering green ground cube to gray
         CubeController triggeringGroundCube = FindGroundCubeAt(groundPos);
@@ -280,7 +280,7 @@ public class CubeLevelManager : MonoBehaviour
             (triggeringGroundCube.Model.ActualType == CubeModel.CubeType.Green || 
              triggeringGroundCube.Model.ClassicType == CubeModel.CubeType.Green))
         {
-            Debug.Log($"BlowCubesAbove: Turning green ground cube at {groundPos} to gray");
+            IDebug.Log($"BlowCubesAbove: Turning green ground cube at {groundPos} to gray");
             triggeringGroundCube.ChangeType(CubeModel.CubeType.Gray);
         }
         
@@ -299,7 +299,7 @@ public class CubeLevelManager : MonoBehaviour
                 CubeController cubeAbove = FindCubeAbove(checkPos);
                 if (cubeAbove == null) continue;
                 
-                Debug.Log($"BlowCubesAbove: Blowing cube at {checkPos}");
+                IDebug.Log($"BlowCubesAbove: Blowing cube at {checkPos}");
                 BlowSingleCube(cubeAbove, groundCube);
             }
         }
@@ -307,7 +307,7 @@ public class CubeLevelManager : MonoBehaviour
 
     public void TriggerGreenReaction()
     {
-        Debug.Log("TriggerGreenReaction: Finding all green ground cubes");
+        IDebug.Log("TriggerGreenReaction: Finding all green ground cubes");
         
         if (groundGenerator == null)
         {
@@ -318,19 +318,19 @@ public class CubeLevelManager : MonoBehaviour
         // Get all green ground cubes from GroundGenerator
         List<CubeController> greenGroundCubes = groundGenerator.GetAllGreenGroundCubes();
         
-        Debug.Log($"TriggerGreenReaction: Found {greenGroundCubes.Count} green ground cubes");
+        IDebug.Log($"TriggerGreenReaction: Found {greenGroundCubes.Count} green ground cubes");
         
         // Blow cubes above each green ground cube
         foreach (CubeController greenCube in greenGroundCubes)
         {
-            Debug.Log($"TriggerGreenReaction: Blowing cubes above {greenCube.Model.GridPos}");
+            IDebug.Log($"TriggerGreenReaction: Blowing cubes above {greenCube.Model.GridPos}");
             BlowCubesAbove(greenCube.Model.GridPos);
         }
     }
 
     public IEnumerator RiseLevelCubesCoroutine()
     {
-        Debug.Log("RiseLevelCubes: Starting rise sequence");
+        IDebug.Log("RiseLevelCubes: Starting rise sequence");
         
         int cubesRising = grid.Values.Count;
         int cubesFinished = 0;
@@ -339,7 +339,7 @@ public class CubeLevelManager : MonoBehaviour
         {
             cube.Rise(() => {
                 cubesFinished++;
-                // Debug.Log($"Cube finished rising. {cubesFinished}/{cubesRising}");
+                // IDebug.Log("Cube finished rising. {cubesFinished}/{cubesRising}");
             });
         }
         
@@ -349,7 +349,7 @@ public class CubeLevelManager : MonoBehaviour
             yield return null;
         }
         
-        Debug.Log("RiseLevelCubes: All cubes finished rising!");
+        IDebug.Log("RiseLevelCubes: All cubes finished rising!");
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
