@@ -8,10 +8,19 @@ using UnityEngine.UIElements;
 public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
-    [SerializeField] float moveSpeed = 0.5f;
-    [SerializeField] float rotationSpeed = 720f;
+    [SerializeField] private float moveSpeed = 0.5f;
+    [SerializeField] private float rotationSpeed = 720f;
     
-
+    public float MoveSpeed
+    {
+        get => moveSpeed;
+        set
+        {
+            moveSpeed = value;
+            animator.SetFloat("runSpeed", value);
+        }
+    }
+    
     private GroundGenerator ground;
     private CubeLevelManager cubeLevelManager;
 
@@ -27,6 +36,8 @@ public class PlayerController : MonoBehaviour
         ground = groundGen;
         cubeLevelManager = cubeManager;
 
+        // Set initial speed
+        MoveSpeed = 2f;
         // Subscribe to the events to do something
         cubeLevelManager.OnRollStarted += () => { isRolling = true; };
         cubeLevelManager.OnRollFinished += () => { isRolling = false; };
@@ -35,9 +46,25 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         animator = GetComponent<Animator>();
+        MoveSpeed = moveSpeed;
         input = new PlayerInputActions();
-
         
+    }
+
+    // Called when values are changed in the Inspector
+    void OnValidate()
+    {
+        // Update animator's runSpeed when moveSpeed is changed in Inspector
+        if (animator == null)
+            animator = GetComponent<Animator>();
+            
+        if (animator != null)
+        {
+            animator.SetFloat("runSpeed", moveSpeed);
+            // MoveSpeed = moveSpeed;
+            // animator.SetFloat("runSpeed", moveSpeed);
+        }
+        MoveSpeed = moveSpeed;
     }
 
     void OnEnable()
@@ -135,7 +162,7 @@ public class PlayerController : MonoBehaviour
         if (!ctx.performed)
             return;
 
-        IDebug.Log("Green reaction triggered - blowing all green ground cubes");
+        IDebug.Log("Blowing all green ground cubes");
         cubeLevelManager.TriggerGreenReaction();
     }
 
@@ -186,15 +213,6 @@ public class PlayerController : MonoBehaviour
             return;
 
         }
-        //Vector3 nextPos = transform.position + moveDir * moveSpeed * Time.deltaTime;
-
-        // TODO : get this working
-        // if (cubeLevelManager.IsWorldPositionBLocked(nextPos3d))
-        // {
-        //     Debug.Log("Player blocked !");
-        //     animator.SetBool("isRunning", false);
-        //     return;
-        // }
 
         animator.SetBool("isRunning", true);
         // Debug.Log(transform.position);
