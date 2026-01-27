@@ -108,3 +108,7 @@ InitTestScene*.unity*
 !/[Pp]ackages/manifest.json
 !/[Pp]ackages/packages-lock.json
 com.unity.render-pipelines.universal/
+
+# Specific to the project
+/Other/*.db
+
